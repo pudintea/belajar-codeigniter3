@@ -1,4 +1,4 @@
-<?php if ( ! defined('__NAJZMI_PUDINTEA__')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Template {
 		var $template_data = array();
