@@ -26,8 +26,8 @@ class Template {
 /*
 * Menampilkan 2 view konten ke template
 *$this->load->library(array('template')); load library template
-*$this->template->pdn_load('tema','konten1','kontendata'); menampilkan file konten.php yang ada di folder view dan ditampilkan kedalam file template utama (2 pemanggilan konten)
-*$this->template->load('konten1'); menampilkan file kode.php yang ada di folder view dan ditampilkan kedalam file template utama (1 pemanggilan konten)
+*$this->template->pdn_load('tema','konten1','kontendata'); menampilkan file konten1.php dan kontendata.php yang ada di folder view dan ditampilkan kedalam file template utama (2 pemanggilan konten)
+*$this->template->load('konten1'); menampilkan file konten1.php yang ada di folder view dan ditampilkan kedalam file template utama (1 pemanggilan konten)
 *
 * TEMPLATE HTML (Tampilkan)
 * isset($konten) ? $konten : '';
