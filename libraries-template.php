@@ -7,26 +7,27 @@ class Template {
 		{
 			$this->template_data[$name] = $value;
 		}
-	
-		function pdn_load($template = '', $view = '' , $view_data = array(), $return = FALSE)
+		
+		function load($template = '', $view = '', $view_data = array(), $return = FALSE)
 		{
 			$this->CI =& get_instance();
-			$this->set('konten', $this->CI->load->view($view, $view_data, TRUE));
+			$this->set('pdn_konten', $this->CI->load->view($view, $view_data, TRUE));
 			return $this->CI->load->view($template, $this->template_data, $return);
 		}
-		
-		function pdn_kode($view = '' , $view_data = array(), $return = FALSE)
+	
+		function pdn_load($template = '', $view = '', $view2 = '' , $view_data = array(), $return = FALSE)
 		{
 			$this->CI =& get_instance();
-			$this->set('kode', $this->CI->load->view($view, $view_data, TRUE));
-			return $this->CI->load->view($view, $this->template_data, $return);
+			$this->set('pdn_konten', $this->CI->load->view($view, $view_data, TRUE));
+			$this->set('pdn_kode', $this->CI->load->view($view2, $view_data, TRUE));
+			return $this->CI->load->view($template, $this->template_data, $return);
 		}
 }
 /*
-*
+* Menampilkan 2 view konten ke template
 *$this->load->library(array('template')); load library template
-*$this->template->pdn_load('tem','konten'); menampilkan file konten.php yang ada di folder view dan ditampilkan kedalam file template utama
-*$this->template->pdn_kode('kode'); menampilkan file kode.php yang ada di folder view dan ditampilkan kedalam file template utama
+*$this->template->pdn_load('tema','konten1','kontendata'); menampilkan file konten.php yang ada di folder view dan ditampilkan kedalam file template utama (2 pemanggilan konten)
+*$this->template->load('konten1'); menampilkan file kode.php yang ada di folder view dan ditampilkan kedalam file template utama (1 pemanggilan konten)
 *
 * TEMPLATE HTML (Tampilkan)
 * isset($konten) ? $konten : '';
