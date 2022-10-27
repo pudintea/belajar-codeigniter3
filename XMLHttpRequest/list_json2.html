@@ -45,6 +45,7 @@
 				}
 			};
 			PdnXmlhttp.open("GET", "http://localhost/test/data_json2.php"); // tentukan server tujuan
+			PdnXmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			PdnXmlhttp.send(); // eksekusi
 		</script>
 	</body>
