@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Table Json1 Ajax</title>
+		<link href="table-style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			<span id="PDNJmlTableJson"></span>
+			<table class="table mt" >
+				<thead>
+					<tr>
+						<td class="tc">No</td>
+						<td class="tc">Nama</td>
+						<td>Alamat</td>
+						<td class="tc">Email</td>
+					</tr>
+				</thead>
+				<tbody id="PDNTableJson">
+				</tbody>
+			</table>
+			</br>
+			</br>
+			</br>
+			</hr>
+			<div id="PDNListJson">
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script type="text/javascript" language="javascript">
+			$(document).ready(function(){
+				function pdn_tableJson(){
+					var pdn_url = 'http://localhost/test/data_json1.php';
+					$.ajax({
+						url         : pdn_url,
+						type        : "POST",
+						dataType    : "json",
+						data		: "",
+						success     : function(data){
+							jmlData = data.length;
+							buatTabel = "";
+							for(a = 0; a < jmlData; a++){
+								buatTabel 	+= "<tr>"
+												+ "<td class='tc'>" + (a+1) + "</td>"
+												+ "<td>" + data[a]["nama"] + "</td>"
+												+ "<td>" + data[a]["alamat"] + "</td>"
+												+ "<td>" + data[a]["email"] + "</td>"
+											+ "<tr/>";
+							};
+							
+							document.getElementById("PDNJmlTableJson").innerHTML = jmlData;
+							document.getElementById("PDNTableJson").innerHTML = buatTabel;
+							
+						},
+						
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.Message);
+						},
+					});
+				}
+				//TAMPILKAN
+				pdn_tableJson();
+				//setInterval(pdn_tableJson, 36000);
+			});
+		</script>
+		
+		<script type="text/javascript" language="javascript">
+			$(document).ready(function(){
+				function pdn_listJson(){
+					var pdn_url = 'http://localhost/test/data_json2.php';
+					$.ajax({
+						url         : pdn_url,
+						type        : "POST",
+						dataType    : "json",
+						data		: "",
+						success     : function(data){
+							jmlData = data.length;
+							buatList = "";
+							for(a = 0; a < jmlData; a++){
+								buatList 	+= "<ul>"
+												+ "<li><a href='" + data[a]["link"] + "' target='_blank'>"+ data[a]["edisi"] +"</a></li>"
+											+ "<ul/>";
+							};
+							document.getElementById("PDNListJson").innerHTML = buatList;
+							
+						},
+						
+						error: function(xhr, status, error) {
+							var err = eval("(" + xhr.responseText + ")");
+							alert(err.Message);
+						},
+					});
+				}
+				//TAMPILKAN
+				pdn_listJson();
+				//setInterval(pdn_listJson, 36000);
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<?php header('Access-Control-Allow-Origin: *'); ?>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>List Json1</title>
+		<link href="table-style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			
+			<div id="demo">
+			
+			</div>
+			
+		</div>
+		<script type="text/javascript" language="javascript">
+			var PdnXmlhttp, PdnMyObj, Pdnx, PdnTxt = "";
+			if (window.XMLHttpRequest) {
+				// code for modern browsers
+				PdnXmlhttp = new XMLHttpRequest();
+			 } else {
+				// code for old IE browsers
+				PdnXmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			PdnXmlhttp.addEventListener("load", () => { 
+			  // callback, ketika server memberi response
+				if(PdnXmlhttp.status >= 200 && PdnXmlhttp.status <= 226) {
+					//Jika respon berhasil, tampilkan
+					//console.log(PdnXmlhttp.responseText);
+				}else{
+					//Jika respon Gagal
+					console.log("Galat");
+				}
+			});
+			
+			PdnXmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					PdnMyObj = JSON.parse(this.responseText);
+					for (Pdnx in PdnMyObj) {
+						PdnTxt += "<ul>"
+									+"<li><a href='" + PdnMyObj[Pdnx].link + "' target='_blank'>" + PdnMyObj[Pdnx].edisi + "</a></li>"
+								+"</ul>";
+					}  
+					document.getElementById("demo").innerHTML = PdnTxt;
+				}
+			};
+			PdnXmlhttp.open("GET", "http://localhost/test/data_json2.php"); // tentukan server tujuan
+			PdnXmlhttp.send(); // eksekusi
+		</script>
+	</body>
+</html>

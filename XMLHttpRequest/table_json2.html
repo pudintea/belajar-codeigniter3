@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Table Json2 XMLHttpRequest</title>
+		<link href="table-style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			<span id="PDNJmlTableJson"></span>
+			<table class="table mt" >
+				<thead>
+					<tr>
+						<td class="tc">No</td>
+						<td class="tc">Edisi</td>
+						<td>link</td>
+					</tr>
+				</thead>
+				<tbody id="demo">
+				</tbody>
+			</table>
+			</br>
+			Jumlah : <b id="jml"></b>
+		</div>
+		<script type="text/javascript" language="javascript">
+			var PdnXmlhttp, PdnMyObj, Pdnx, pdnTxt = "";
+			if (window.XMLHttpRequest) {
+				// code for modern browsers
+				PdnXmlhttp = new XMLHttpRequest();
+			 } else {
+				// code for old IE browsers
+				PdnXmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			PdnXmlhttp.addEventListener("load", () => { 
+				// callback, ketika server memberi response
+				if(PdnXmlhttp.status >= 200 && PdnXmlhttp.status <= 226) {
+					//Jika respon berhasil, tampilkan
+					console.log(PdnXmlhttp.responseText);
+				}else{
+					//Jika respon Gagal
+					console.log("Galat");
+				}
+			});
+			
+			PdnXmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					PdnMyObj = JSON.parse(this.responseText);
+					jmlData = PdnMyObj.length;
+					for (Pdnx = 0; Pdnx < jmlData; Pdnx++) {
+						pdnTxt += "<tr>"
+								+"<td class='tc'>" + (Pdnx+1) + "</td>"
+								+"<td>" + PdnMyObj[Pdnx].edisi + "</td>"
+								+"<td>" + PdnMyObj[Pdnx].link + "</td>"
+							+"</tr>";
+					}  
+					document.getElementById("demo").innerHTML = pdnTxt;
+					document.getElementById("jml").innerHTML = jmlData;
+				}
+			};
+			PdnXmlhttp.open("GET", "http://localhost/test/data_json2.php"); // tentukan server tujuan
+			PdnXmlhttp.send(); // eksekusi
+		</script>
+	</body>
+</html>
