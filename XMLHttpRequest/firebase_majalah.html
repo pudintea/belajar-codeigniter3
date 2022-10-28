@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bootstrap demo</title>
+		<style>
+			#pdnFirebaseMajalah{
+				margin-top: 30px;
+			}
+			#pdnFirebaseMajalah ul {
+				
+			}
+			#pdnFirebaseMajalah ul li{
+				border-bottom: 1px solid rgba(0,0,0,.1);
+				margin-bottom: 10px;
+				padding-bottom: 10px;
+				list-style: none;
+			}
+			#pdnFirebaseMajalah ul li a{
+				color: #000;
+				text-decoration:none;
+			}
+			#pdnFirebaseMajalah ul li a:hover {
+				color: #004b8e;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="pdnFirebaseMajalah">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+		<script>
+			var PdnXmlhttp, PdnMyObj, Pdnx, pdnTxt = "";
+			const firebaseConfig = {
+			  apiKey: "AIzaSyCF1hMx00An8_x-0EkIQDaz5ngaqhpjQ2o",
+			  authDomain: "al-azhar-95b15.firebaseapp.com",
+			  projectId: "al-azhar-95b15",
+			  storageBucket: "al-azhar-95b15.appspot.com",
+			  messagingSenderId: "310122813587",
+			  appId: "1:310122813587:web:2b993ad55ca91f33055566",
+			  measurementId: "G-9M2JLC52VH"
+			};
+
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			const db = firebase.firestore();
+
+			db.collection("tb_majalah").onSnapshot(snapshot =>{
+				//snapshot.docChanges();
+				//console.log(snapshot.size); //Jumlah Data
+				getData();
+			});
+			
+			async function getData(){
+				document.getElementById('pdnFirebaseMajalah').innerHTML = '';
+				const majalah = await db.collection("tb_majalah").get(); //Memanggil Collection
+				//console.log(majalah.docs.length); //Jumlah Data
+				console.log(majalah.docs); //Jumlah Data
+				majalah.docs.forEach((mjl, i) => {
+					//console.log(mjl.data().edisi);
+					pdnTxt += "<ul>"
+								+"<li>"+ (i+1) +". <a href='" + mjl.data().link + "' target='_blank'>" + mjl.data().edisi + "</a></li>"
+							+"</ul>";
+					document.getElementById('pdnFirebaseMajalah').innerHTML = pdnTxt;
+				});
+			}
+		</script>
+	</body>
+</html>
+
+
