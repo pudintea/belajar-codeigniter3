@@ -1,4 +1,20 @@
 <?php
+/**
+     * SAVE
+     **/
+	
+function save($save_data)
+    {
+        if (empty ($save_data['oruangan_idruangan'])) {
+            return false;
+        }
+
+        $this->_result = $this->db->insert($this->_dtable, $save_data);
+
+        if ($this->_result) {
+            return $this->_result;
+        }
+    }
 public function cekPeminjam($room, $date_start, $date_end)
 		{
 			//$this->db->where('approved', 1);
