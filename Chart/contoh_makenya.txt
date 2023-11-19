@@ -1,0 +1,187 @@
+============== DATABASE VIEW =================
+--
+-- GRAFIK
+--
+
+CREATE VIEW v_ti_grafik_status_pegawai
+AS
+SELECT 
+tb1.Kode, tb1.status, count(tb1.id_status) as jmlpeg, 
+tb2.id_status_kepegawaian
+FROM t_ref_status_pegawai tb1
+JOIN t_pegawai tb2 ON tb1.id_status = tb2.id_status_kepegawaian
+GROUP BY tb1.id_status;
+
+================== MODELS ==============
+  function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
+    }
+    /**
+     * return _retval
+     *
+     * @var Boolean
+     **/
+    private $_retval = NULL;
+
+    /**
+     * return _result
+     *
+     * @var Boolean
+     **/
+    private $_result = FALSE;
+
+    /**
+     * return _retarr
+     *
+     * @var Array
+     **/
+    private $_retarr = array();
+
+  function getStatusPegawai(){
+		$this->_result = $this->db->get('v_ti_grafik_status_pegawai')->result();
+		if ($this->_result) {
+            return $this->_result;
+        }
+	}
+	
+	function getJMLPegawai(){
+		$this->db->select('id, nip');
+		$this->_result = $this->db->get('tb_pegawai')->num_rows();
+		if ($this->_result) {
+            return $this->_result;
+        }
+	}
+
+========= CI3 Controller ==============
+  	function json_status_pegawai(){
+		$this->load->database();
+		$this->load->model($this->MainModel(), 'M_Najzmi');
+		$data = $this->M_Najzmi->getStatusPegawai();
+		foreach ($data as $pdn){
+			$row[] = array(
+				"nama"	=> $pdn->Kode,
+				"jml"	=> $pdn->jmlpeg,
+			);
+		}
+		
+		header('Content-Type: application/json');
+        echo json_encode($row,TRUE);
+	}
+	
+	function json_pegawai(){
+		$this->load->database();
+		$this->load->model($this->MainModel(), 'M_Najzmi');
+		$pdn	= $this->M_Najzmi->getJMLPegawai();
+		$row = [];
+		$row[] = array(
+			"jml_pegawai"	=> $pdn,
+		);
+		
+		
+		header('Content-Type: application/json');
+        echo json_encode($row,TRUE);
+	}
+
+==============================================
+
+============ CI3 VIEW ========================
+<!-- Content Row -->
+						<div class="row">
+							<!-- Area Chart -->
+							<div class="col-md-12">
+								<div class="card shadow mb-4">
+									<div class="card-body">
+										<div style="position: relative; height:50vh; width:100%">
+											<canvas id="PDNChart1"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Content Row -->
+
+
+
+
+<!-- JAVA SCRIPT -->
+
+    <!-- Page level plugins -->
+    <script src="<?=base_url('assets');?>/vendor/chart.js/Chart.min.js"></script>
+	
+<script type="text/javascript" language="javascript">
+	$(document).ready(function(){
+		function get_contoh() {
+		$.ajax({
+			url: "<?php echo site_url('dashboard/json_status_pegawai')?>",
+			method: "GET",
+			success: function(data) {
+				//console.log(data);
+				var label_nya = [];
+				var jml_nya = [];
+
+				for(var i in data) {
+					label_nya.push( data[i].nama);
+					jml_nya.push(data[i].jml);
+				}
+				var ctx = document.getElementById("PDNChart1");
+				var lineChart = new Chart(ctx, {
+					type: "bar",
+					data: {
+					  labels: label_nya,
+					  datasets: [{
+						label: "JUMLAH DATA PEGAWAI",
+						data: jml_nya,
+						borderColor: '#3b21d6',
+						backgroundColor: '#3846af',
+					  }]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero:true
+								}
+							}]
+						}
+					},
+				});
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+		};
+		
+		get_contoh();
+		setInterval(get_contoh, 360000);
+	});
+</script>
+
+<script type="text/javascript" language="javascript">
+	$(document).ready(function(){
+		function get_pegawai() {
+			$.ajax({
+				url: "<?php echo site_url('dashboard/json_pegawai')?>",
+				method: "GET",
+				success: function(data) {
+					//console.log(data[0].jml_pegawai);
+					document.getElementById("hasil-output").innerHTML = data[0].jml_pegawai;
+				},
+				error: function(data) {
+					console.log(data);
+				},
+			});
+		};
+		
+		get_pegawai();
+		setInterval(get_pegawai, 360000);
+	});
+</script>
+
+
+
+=============================================NAJZMI PUDINTEA =============================================================
