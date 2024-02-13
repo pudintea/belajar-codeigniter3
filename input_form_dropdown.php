@@ -8,9 +8,10 @@ $data [
 
 echo echo form_dropdown('datasaya', $data, 'nama');
 
+echo echo form_dropdown('ukuran_baju', array ('S'=>'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL'), 'XL');
 
 
 
 
 
-
+// ====================== PUDIN.MY.ID ===============================
