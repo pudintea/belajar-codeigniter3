@@ -1,0 +1,11 @@
+<?php
+$kalimat = "Mari kita belajar bahasa pemrograman PHP Bersama";
+$potong_kalimat = substr($kalimat,-5);
+echo $potong_kalimat;
+?>
+
+Maka hasilnya akan seperti dibawah ini : rsama
+
+
+
+============== PUDIN.MY.ID ==================================================
