@@ -1,0 +1,14 @@
+Domain : localhost
+
+Versi 2
+=======
+- Site Key   = 6Lfp23QUAAAAAJoDTYcr-ZA-Mimaq5BxMDuVXpc-
+- Secret Key = 6Lfp23QUAAAAAOzu7LAXWd2S3sVASdgFKg6LC7Hg
+
+
+Versi 3
+========
+- Site Key   = 6LeiSOMpAAAAAHYr4vCPQx9Gk7FIAC0RAQVGHAa0
+- Secret Key = 6LeiSOMpAAAAAN6z4-tQDTlv5U7-DWYk-0z7w1f5
+
+======================== PUDIN.MY.ID =================================
