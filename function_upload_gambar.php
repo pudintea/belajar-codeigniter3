@@ -1,5 +1,6 @@
 <?php
-
+//Librari Upload
+$this->load->library('upload');
 	function update(){
 
 		$angka =  $this->input->post('gaji_poko');
