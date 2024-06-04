@@ -96,3 +96,29 @@
 		redirect(base_url('Profil'), 'refresh');
 			
 	}
+
+// =================================================================================
+
+Array
+(
+        [file_name]     => mypic.jpg
+        [file_type]     => image/jpeg
+        [file_path]     => /path/to/your/upload/
+        [full_path]     => /path/to/your/upload/jpg.jpg
+        [raw_name]      => mypic
+        [orig_name]     => mypic.jpg
+        [client_name]   => mypic.jpg
+        [file_ext]      => .jpg
+        [file_size]     => 22.2
+        [is_image]      => 1
+        [image_width]   => 800
+        [image_height]  => 600
+        [image_type]    => jpeg
+        [image_size_str] => width="800" height="200"
+)
+
+
+
+
+
+// ============================================ PUDIN.MY.ID ===========================================
