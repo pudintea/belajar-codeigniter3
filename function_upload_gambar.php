@@ -1,6 +1,9 @@
 <?php
 //Librari Upload
 $this->load->library('upload');
+
+// <input type="file" name="sk_golongan" id="sk_golongan" accept="image/png, image/jpeg, image/jpg, image/gif">
+				</div>
 	function update(){
 
 		$angka =  $this->input->post('gaji_poko');
