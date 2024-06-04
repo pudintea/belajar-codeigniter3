@@ -117,7 +117,8 @@ Array
         [image_size_str] => width="800" height="200"
 )
 
-
+// To return one element from the array:
+$this->upload->data('file_name');       // Returns: mypic.jpg
 
 
 
