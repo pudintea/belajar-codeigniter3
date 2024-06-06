@@ -1,0 +1,75 @@
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- jQuery UI library -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+
+Controller
+===========
+
+	function auto_negara(){
+		$searchTerm = $_GET['term'];
+		
+		$query = $this->M_pdn->get_negara($searchTerm);
+		
+		$data_negara = array();  
+		if($query->num_rows() > 0){  
+			foreach($query->result() as $row){  
+				$data['id'] = $row->kode_negara;  
+				$data['value'] = $row->nama_negara;  
+				array_push($data_negara, $data);
+			}  
+		}
+		
+		// Set content type to JSON
+		header('Content-Type: application/json');
+		// Return results as JSON encoded array  
+		echo json_encode($data_negara);
+	}
+
+
+Model
+=====
+	public function get_negara($search_term = '') {
+        $this->db->select('kode_negara, nama_negara');
+        $this->db->from('t_ref_negara');
+        if(!empty($search_term)) {
+            $this->db->like('nama_negara', $search_term);
+        }
+        $query = $this->db->get();
+        return $query;
+    }
+
+Html
+=====
+<div class="form-group">
+		<label for="nama_negara">Nama Negara</label>
+		<input type="text" name="nama_negara" class="form-control" id="nama_negara">
+</div>
+
+Javascript
+===========
+	<script type="text/javascript">
+		//$(function() {
+		//	$("#nama_negara").autocomplete({
+		//		source: "<?=base_url($endpoint.'/auto_negara') ?>",
+		//		select: function( event, ui ) {
+		//			event.preventDefault();
+		//			$("#nama_negara").val(ui.item.id);
+		//		}
+		//	});
+		//});
+		
+		$(function() {
+			$("#nama_negara").autocomplete({
+				source: "<?=base_url($endpoint.'/auto_negara') ?>",
+				minLength: 3
+			});
+		});
+	</script>
+
+
+
+=======================================PUDIN.MY.ID======================================================
