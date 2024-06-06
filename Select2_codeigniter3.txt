@@ -1,0 +1,82 @@
+================================
+Refrensi : https://www.codexworld.com/remote-data-in-select2-dropdown-with-ajax-using-php/
+Refrensi : https://github.com/select2/select2/releases
+
+Function
+========
+function get_negara(){
+    if(!empty($_GET['type']) && $_GET['type'] == 'negara_search'){
+        $search_term = !empty($_GET['search']) ? $_GET['search'] : '';
+        
+        // Fetch matched data from the database  
+        $query = $this->M_pdn->get_negara($search_term); 
+        
+        // Generate array with filtered records  
+        $data_negara = array();  
+        if($query->num_rows() > 0){  
+            foreach($query->result() as $row){  
+                $data['id'] = $row->kode_negara;  
+                $data['text'] = $row->nama_negara;  
+                array_push($data_negara, $data);
+            }  
+        }
+        
+        // Set content type to JSON
+        header('Content-Type: application/json');
+        
+        // Return results as JSON encoded array  
+        echo json_encode($data_negara);  
+    }
+}
+
+
+Model
+=====
+public function get_negara($search_term = '') {
+        $this->db->select('kode_negara, nama_negara');
+        $this->db->from('negara');
+        if(!empty($search_term)) {
+            $this->db->like('nama_negara', $search_term);
+        }
+        $query = $this->db->get();
+        return $query;
+}
+
+Html
+=====
+
+<div class="form-group">
+  <label for="negara_id">Negara</label>
+  <select name="negara_id" id="negara_select" class="form-control">
+	  <option value="">-- Pilih Negara --</option>
+	</select>
+</div>
+
+Javascript
+===========
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#negara_select").select2({
+            ajax: {
+                url: "<?=base_url($endpoint.'/get_negara') ?>",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        search: params.term,
+                        type: 'negara_search'
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            cache: true,
+            placeholder: 'Cari nama negara...',
+            minimumInputLength: 1
+        });
+    });
+</script>
+
+========================== PUDIN.MY.ID .....................................................
