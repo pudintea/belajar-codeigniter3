@@ -72,7 +72,8 @@ Javascript
                     };
                 }
             },
-            cache: true,
+	theme: 'bootstrap4',
+	    cache: true,
             placeholder: 'Cari nama negara...',
             minimumInputLength: 1
         });
