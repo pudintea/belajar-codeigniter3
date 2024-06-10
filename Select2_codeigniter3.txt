@@ -80,4 +80,33 @@ Javascript
     });
 </script>
 
+Javascript Jika Menggunakan Modal Boostrap
+==========================================
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#pegawai_select").select2({
+			ajax: {
+				url: "<?=base_url($endpoint.'/get_pegawai') ?>",
+				dataType: 'json',
+				data: function (params) {
+					return {
+						search: params.term,
+						type: 'pegawai_search'
+					};
+				},
+				processResults: function (data) {
+					return {
+						results: data
+					};
+				}
+			},
+			theme: 'bootstrap4',
+			dropdownParent: $('#pdnModalData'),
+			cache: true,
+			placeholder: 'Cari nama negara...',
+			minimumInputLength: 3
+		});
+	});
+</script>
+
 ========================== PUDIN.MY.ID .....................................................
