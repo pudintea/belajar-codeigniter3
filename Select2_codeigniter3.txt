@@ -111,4 +111,21 @@ Javascript Jika Menggunakan Modal Boostrap
 	});
 </script>
 
+
+
+APPEND
+You are fetching options list correctly in data.posts.kode_region, then update this line
+
+$("#nRegionE").val(data.posts.kode_region);
+
+to this
+
+$("#nRegionE").html('<option value = "'+data.posts.kode_region+'" selected >'+data.posts.kode_region+'</option>');
+
+and don't forget to comment this line
+
+$('#nRegionE').val(data.posts.kode_region).trigger("change");
+
+
+
 ========================== PUDIN.MY.ID .....................................................
