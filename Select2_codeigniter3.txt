@@ -2,6 +2,7 @@
 Refrensi : https://www.codexworld.com/remote-data-in-select2-dropdown-with-ajax-using-php/
 Refrensi : https://github.com/select2/select2/releases
 Refrensi : https://select2.org/troubleshooting/common-problems
+Refrensi : https://stackoverflow.com/questions/68480709/how-to-fetch-and-display-selected-value-into-select2-tag-in-my-edit-form-using
 
 Function
 ========
