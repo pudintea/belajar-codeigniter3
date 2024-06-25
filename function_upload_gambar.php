@@ -125,5 +125,35 @@ Array
 $this->upload->data('file_name');       // Returns: mypic.jpg
 
 
+// =============================================================================================================
+
+		if  ( !empty($_FILES['file_skgolongan'] ['name'])){
+			$get_nip_pegawai 			= $this->M_Najzmi->nip_pegawai($id_pegawai);
+			$tgl_now_sk  				= date('dmY-His');
+
+			$config['remove_space']     = 'TRUE';
+			$config['overwrite']        = 'TRUE';
+			$config['upload_path']      = './assets/img/';
+			$config['allowed_types']    = 'jpg|png|jpeg|pdf';
+			$config['max_size']         = '20480';
+			$config['file_name']        = $get_nip_pegawai.'-SK-GOLONGAN-'.$tgl_now_sk;
+
+			$this->load->library('upload',$config);
+
+			if (! $this->upload->do_upload('file_skgolongan'))
+			{
+				$message = $this->upload->display_errors();
+				$this->session->set_flashdata('error', $message);
+				redirect(base_url($this->ClassNama()), 'refresh');
+			}else{
+				$reg_data['simpan_nama_gambar'] = $this->upload->data('file_name');
+				//Jika nama masih kosoongjuga
+				if (empty($reg_data['simpan_nama_gambar'])){
+					$message = "File yang anda upload, Kosong";
+					$this->session->set_flashdata('error', $message);
+					redirect(base_url($this->ClassNama()), 'refresh');
+				}
+			}
+		}
 
 // ============================================ PUDIN.MY.ID ===========================================
