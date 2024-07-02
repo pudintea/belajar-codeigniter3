@@ -1,0 +1,161 @@
+Pada kasus ini saya ingin menampilkan semua data kegiatan dari table kegiatan,
+kecuali data kegiatan di bulan ini, ini hanya logika saja, penerapanya banyak sekali kegunaanya menurut saya.
+
+Codeigniter 3.1.13
+MariaDB 10.4
+
+Buat Table :
+
+CREATE TABLE `kegiatan` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nama` varchar(128) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kegiatan` text NOT NULL,
+  `add` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+Buat Tabel view untuk menampilkan data di bulan ini berdasarkan bulan dan tahun :
+
+CREATE VIEW v_kegiatan_bulan_ini AS
+SELECT id, nama, EXTRACT(MONTH FROM tanggal) AS bulan, EXTRACT(YEAR FROM tanggal) AS tahun, kegiatan
+FROM kegiatan
+WHERE EXTRACT(MONTH FROM tanggal) = MONTH(CURRENT_DATE())
+AND EXTRACT(YEAR FROM tanggal) = YEAR(CURRENT_DATE());
+
+===========================================================================================================
+1. Controller
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Welcome extends CI_Controller {
+	
+	function __construct()
+    {
+		$this->data = [];
+        parent::__construct();
+			date_default_timezone_set('Asia/Jakarta');
+			$this->load->database(); // Load Databasae
+    }
+	
+	public function index()
+	{
+		$this->load->model('Mymodels', 'Pdn');
+		$tanpaaku = $this->Pdn->not_kegiatan();
+		$not_where_array = $tanpaaku;
+		$this->data['res_kegiatan'] = $this->Pdn->get_kegiatan($not_where_array);
+		$this->load->view('table1', $this->data);
+	}
+}
+
+
+2. Models [Mymodles]
+
+class Mymodels extends CI_Model
+{
+    function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
+    }
+
+    /**
+     * return _retval
+     *
+     * @var Boolean
+     **/
+    private $_retval = NULL;
+
+    /**
+     * return _result
+     *
+     * @var Boolean
+     **/
+    private $_result = FALSE;
+
+    /**
+     * return _retarr
+     *
+     * @var Array
+     **/
+    private $_retarr = array();
+	
+	/**
+     * Datatables server side
+     *
+     * 
+     **/
+	 
+	function get_kegiatan($where_array=''){
+		$this->db->where_not_in('id', $where_array);
+		$this->_result = $this->db->get('kegiatan')->result();
+		if($this->_result){
+			return $this->_result;
+		}
+	}
+	
+	function not_kegiatan(){
+		// Ambil hanya kolom 'id' dari tabel
+		$this->db->select('id');
+		$this->db->from('v_kegiatan_bulan_ini');
+		$query = $this->db->get();
+
+		// Jika ada hasil, kembalikan sebagai array
+		if($query->num_rows() > 0){
+			$result = $query->result_array();
+			// Ekstrak kolom 'id' dari hasil query
+			$id_array = array_column($result, 'id');
+			return $id_array;
+		} else {
+			return [];
+		}
+	}
+ 
+}
+
+3. View 
+
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container mt-5">
+		<div class="row">
+			<div class="col">
+				<div class="table-responsive">
+					<table class="table" width="100%">
+						<thead>
+							<tr>
+							  <th scope="col">Nama</th>
+							  <th scope="col">Tanggal</th>
+							  <th scope="col">Kegiatan</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							if (is_array($res_kegiatan) || is_object($res_kegiatan)) {
+							foreach($res_kegiatan as $dt) { ?>
+								<tr>
+									<td><?=$dt->nama;?></td>
+									<td><?=$dt->tanggal;?></td>
+									<td><?=$dt->kegiatan;?></td>
+								</tr>
+							<?php } } ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+==================================================== PUDIN.MY.ID ===============================================
