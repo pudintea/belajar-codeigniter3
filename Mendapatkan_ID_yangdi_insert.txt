@@ -1,0 +1,22 @@
+================================================================
+public function insert_surat(){
+    // Data yang akan dimasukkan
+    $data = array(
+        'no_surat' => '123/ABC/2024', // Contoh data no_surat
+        'hal' => 'Pengumuman', // Contoh data hal
+        'tanggal' => '2024-07-01' // Contoh data tanggal
+    );
+
+    // Masukkan data ke dalam tabel tb_surat
+    $this->db->insert('tb_surat', $data);
+
+    // Dapatkan id dari data yang baru saja diinput
+    $insert_id = $this->db->insert_id();
+
+    // Tampilkan id sebagai informasi
+    echo "Data baru berhasil dimasukkan dengan ID: " . $insert_id;
+}
+
+
+
+================= PUDIN.MY.ID ======================================
