@@ -17,6 +17,18 @@ public function insert_surat(){
     echo "Data baru berhasil dimasukkan dengan ID: " . $insert_id;
 }
 
+Cara Mendapatkan ID Terakhir yang Diinsert
+============================================
+
+$this->db->insert('myTable', [
+    'username' => 'darth',
+    'email'    => 'd.vader@theempire.com'
+]);
+
+$insert_id = $this->db->insert_id(); // Ambil ID yang baru saja diinsert
+
+echo $insert_id;
 
 
+SAMA AJA.
 ================= PUDIN.MY.ID ======================================
