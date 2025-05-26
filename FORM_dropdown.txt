@@ -1,3 +1,9 @@
+
+// BIASA
+==========
+$this->data['listmurid'] = form_dropdown('murid', array('L'=>'Laki laki','P'=>'Perempuan'), '', array('id'=>'select2', 'class'=>'form-control'));
+
+
 // Controller
 ================
 $data_murid	= $this->M_najzmi->getmurid();
