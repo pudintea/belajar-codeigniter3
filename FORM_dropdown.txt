@@ -1,0 +1,33 @@
+// Controller
+================
+$data_murid	= $this->M_najzmi->getmurid();
+$lim = [''=> '-- Pilih Murid --'];
+if (is_array($data_murid) || is_object($data_murid)) {
+  foreach ($data_murid as $row){
+    $lim[$row->id_murid] = $row->murid_nama.' - ('.$row->kelas_nama.' - '.$row->kelas_subnama.')';
+  }
+}
+$this->data['listmurid'] = form_dropdown('murid', $lim, '', array('id'=>'select2', 'class'=>'form-control'));
+
+
+// FORM ADD
+============
+<div class="form-group row">
+<label class="control-label col-md-3">* Nama Murid</label>
+<div class="col-md-8">
+  <?=$listmurid;?>
+  <?=form_error('murid','<small class="text-danger pl-3">','</small>');?>
+</div>
+</div>
+
+// MODELS
+==========
+function getmurid(){
+  $this->db->select('id_murid, murid_nisn, murid_nama, kelas_nama, kelas_subnama');
+  $query = $this->db->get('v_murid_kelas')->result();
+  return $query;
+}
+
+
+
+=============================== PUDIN.MY.ID ===============================================
