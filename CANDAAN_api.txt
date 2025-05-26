@@ -1,0 +1,22 @@
+<script type="text/javascript">
+  /** HANYA UNTUK BERCANDA YA - By PUDIN **/
+  const pdnBecanda = document.querySelector('.pdn-becanda');
+  $(document).ready( function () {
+    fetch('https://candaan-api.vercel.app/api/text/random')
+    .then((response) => response.json())
+    .then((data) => {
+      pdnBecanda.innerHTML = data.data;
+    });
+  });
+  
+  const tombolJokes = document.querySelector('#pdn-jokes-receh');
+  tombolJokes.addEventListener('click', function () {
+    fetch('https://candaan-api.vercel.app/api/text/random')
+    .then((response) => response.json())
+    .then((data) => {
+      pdnBecanda.innerHTML = data.data;
+    });
+  });
+</script>
+
+====================== PUDIN =======================
