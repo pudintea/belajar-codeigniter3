@@ -105,22 +105,22 @@
 		$xlsx = Shuchkin\SimpleXLSXGen::fromArray($data);
 
 		// Merge kolom judul
-		$xlsx->mergeCells('A1:W1');
-		$xlsx->mergeCells('A2:W2');
-		$xlsx->mergeCells('A3:W3');
+		$xlsx->mergeCells('A1:W1'); // (MARGE KESAMPING)
+		$xlsx->mergeCells('A2:W2'); // (MARGE KESAMPING)
+		$xlsx->mergeCells('A3:W3'); // (MARGE KESAMPING)
 
 		// Merge header tingkat 1
-		$xlsx->mergeCells('A4:A5'); // Jenjang Sekolah
-		$xlsx->mergeCells('B4:D4'); // Kepsek
-		$xlsx->mergeCells('E4:G4'); // Wakasek
-		$xlsx->mergeCells('H4:J4'); // Guru
-		$xlsx->mergeCells('K4:L4'); // TU
-		$xlsx->mergeCells('M4:N4'); // PSB
-		$xlsx->mergeCells('O4:O5'); // JML TU & PSB
-		$xlsx->mergeCells('P4:Q4'); // Kebersihan
-		$xlsx->mergeCells('R4:S4'); // Satpam
-		$xlsx->mergeCells('T4:T5'); // JML Kebersihan & Satpam
-		$xlsx->mergeCells('U4:W4'); // Total
+		$xlsx->mergeCells('A4:A5'); // Jenjang Sekolah (MARGE KEBAWAH)
+		$xlsx->mergeCells('B4:D4'); // Kepsek (MARGE KESAMPING)
+		$xlsx->mergeCells('E4:G4'); // Wakasek (MARGE KESAMPING)
+		$xlsx->mergeCells('H4:J4'); // Guru (MARGE KESAMPING)
+		$xlsx->mergeCells('K4:L4'); // TU (MARGE KESAMPING)
+		$xlsx->mergeCells('M4:N4'); // PSB (MARGE KESAMPING)
+		$xlsx->mergeCells('O4:O5'); // JML TU & PSB (MARGE KEBAWAH)
+		$xlsx->mergeCells('P4:Q4'); // Kebersihan (MARGE KESAMPING)
+		$xlsx->mergeCells('R4:S4'); // Satpam (MARGE KESAMPING)
+		$xlsx->mergeCells('T4:T5'); // JML Kebersihan & Satpam (MARGE KEBAWAH)
+		$xlsx->mergeCells('U4:W4'); // Total (MARGE KESAMPING)
 
 		// Nama Save
 		$timeNow = time();
